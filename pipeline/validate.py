@@ -9,6 +9,7 @@ from pipeline.ingest import ingest_data
 def load_schema():
  with open("../config/schema.yaml", "r") as f:
     schema = yaml.load(f, Loader=yaml.SafeLoader)
+    return schema
 """here i am checking columns to see if they match and if there is any ,issing values"""
 def check_columns(data, schema):
   excepted_columns = schema['columns'].keys()
@@ -38,7 +39,7 @@ def check_type(data, schema):
         'datetime': 'datetime64[ns]'
     }
     for each_column in schema['columns'].keys():
-        expected_type =  schema['columns'][each_column]['type'].keys() # get type from schema, no .keys()
+        expected_type =  schema['columns'][each_column]['type'] # get type from schema, no .keys()
         expected_type = type_mapping[expected_type]  # convert it
         actual_type = data[each_column].dtype  # get dtype from data
         if expected_type == actual_type:
@@ -46,7 +47,21 @@ def check_type(data, schema):
         else:
             print(f"{each_column} expected {expected_type} but got {actual_type} ❌")
 
-def 
+def check_allowed_values(data, schema):
+
+    for each_column in schema['columns'].keys():
+
+        if 'allowed_values' in schema['columns'][each_column]:
+
+            allowed = schema['columns'][each_column]['allowed_values']
+
+            invalid_values = data[each_column][~data[each_column].isin(allowed)]
+
+            if len(invalid_values) > 0:
+                print(f"{each_column} has invalid values: {invalid_values.unique()} ❌")
+            else:
+                print(f"{each_column} values are valid ✅")
+   
 
 def run_validation(filepath):
   df = ingest_data(filepath)
@@ -55,3 +70,8 @@ def run_validation(filepath):
   check_null (df, schema)
   check_type (df, schema)
   check_allowed_values(df, schema)
+
+
+if __name__ == "__main__":
+    filepath = "../data/raw/user_clicks.csv"
+    run_validation(filepath)  # ✅ just call it, no df =
