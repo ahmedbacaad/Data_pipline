@@ -1,0 +1,1 @@
+A reusable, production-style data pipeline that ingests raw data, validates it, cleans it, transforms it, and stores it in a structured format suitable for downstream analytics or machine learning models

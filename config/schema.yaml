@@ -1,0 +1,62 @@
+# Schema for user_clicks raw data (data/raw/user_clicks.csv)
+# Use this for documentation and for validation in the pipeline
+
+source: user_clicks.csv
+description: Synthetic user behavior / clickstream events
+
+columns:
+  user_id:
+    type: integer
+    nullable: false
+    description: User identifier (1 to NUM_USERS)
+
+  session_id:
+    type: integer
+    nullable: false
+    description: Session identifier
+
+  timestamp:
+    type: datetime
+    nullable: false
+    description: Event time (ISO or parseable datetime)
+
+  page:
+    type: string
+    nullable: false
+    allowed_values:
+      - "/home"
+      - "/search"
+      - "/product"
+      - "/cart"
+      - "/checkout"
+      - "/profile"
+    description: Page or path where the event happened
+
+  event_type:
+    type: string
+    nullable: false
+    allowed_values:
+      - "view"
+      - "click"
+      - "purchase"
+    description: Type of user action
+
+  device:
+    type: string
+    nullable: false
+    allowed_values:
+      - "mobile"
+      - "desktop"
+      - "tablet"
+    description: Device used for the session
+
+  country:
+    type: string
+    nullable: false
+    allowed_values:
+      - "US"
+      - "CA"
+      - "UK"
+      - "DE"
+      - "IN"
+    description: Country code
