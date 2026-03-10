@@ -43,9 +43,9 @@ def check_type(data, schema):
         expected_type = type_mapping[expected_type]  # convert it
         actual_type = data[each_column].dtype  # get dtype from data
         if expected_type == actual_type:
-            print(f"{each_column} type is valid ✅")
+            print(f"{each_column} type is valid ")
         else:
-            print(f"{each_column} expected {expected_type} but got {actual_type} ❌")
+            print(f"{each_column} expected {expected_type} but got {actual_type} ")
 
 def check_allowed_values(data, schema):
 
@@ -58,9 +58,9 @@ def check_allowed_values(data, schema):
             invalid_values = data[each_column][~data[each_column].isin(allowed)]
 
             if len(invalid_values) > 0:
-                print(f"{each_column} has invalid values: {invalid_values.unique()} ❌")
+                print(f"{each_column} has invalid values: {invalid_values.unique()} ")
             else:
-                print(f"{each_column} values are valid ✅")
+                print(f"{each_column} values are valid ")
    
 
 def run_validation(filepath):
@@ -74,4 +74,4 @@ def run_validation(filepath):
 
 if __name__ == "__main__":
     filepath = "../data/raw/user_clicks.csv"
-    run_validation(filepath)  # ✅ just call it, no df =
+    run_validation(filepath)  #  just call it, no df =
