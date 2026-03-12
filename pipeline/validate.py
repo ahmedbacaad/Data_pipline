@@ -75,3 +75,4 @@ def run_validation(filepath):
 if __name__ == "__main__":
     filepath = "../data/raw/user_clicks.csv"
     run_validation(filepath)  #  just call it, no df =
+
